@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Smart Medicine Inventory"
+description = "A secure medicine inventory management system for college demonstrations, with live stock and expiry alerts, medicine management, dispensing cart, reports, feedback, and FAQs."
+version = "1.0.0"
+id = "artifacts/smart-medicine-inventory"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 23217
+
+[services.development]
+run = "pnpm --filter @workspace/smart-medicine-inventory run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/smart-medicine-inventory", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/smart-medicine-inventory/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "23217"
+BASE_PATH = "/"

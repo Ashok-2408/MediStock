@@ -1,6 +1,6 @@
-# [Project name]
+# Smart Medicine Inventory
 
-_Replace the heading above with the project's name, and this line with one sentence describing what this app does for users._
+A secure inventory dashboard for managing medicines, monitoring expiry and stock levels, dispensing items, and reviewing activity.
 
 ## Run & Operate
 
@@ -22,19 +22,24 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Where things live
 
-_Populate as you build — short repo map plus pointers to the source-of-truth file for DB schema, API contracts, theme files, etc._
+- `lib/api-spec/openapi.yaml` — API contract and generated client source of truth
+- `lib/db/src/schema/inventory.ts` — persistent inventory and activity tables
+- `artifacts/api-server/src/routes/inventory.ts` — inventory, dashboard, checkout, reports, and feedback API
+- `artifacts/smart-medicine-inventory/` — React web app
 
 ## Architecture decisions
 
-_Populate as you build — non-obvious choices a reader couldn't infer from the code (3-5 bullets)._
+- Clerk handles sign-in, sign-up, and password recovery; server routes enforce administrator permissions.
+- The first authenticated application account is granted administrator access atomically; later accounts receive staff access.
+- Inventory values are computed from current database rows so dashboard totals and warning counts stay current.
 
 ## Product
 
-_Describe the high-level user-facing capabilities of this app once they exist._
+Medicine CRUD, low-stock/expiry alerts, confirmed cart checkout, activity and stock reports, feedback, and FAQs.
 
 ## User preferences
 
-_Populate as you build — explicit user instructions worth remembering across sessions._
+- Keep the dashboard creative, polished, responsive, and easy to scan for a college demonstration.
 
 ## Gotchas
 
