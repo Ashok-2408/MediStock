@@ -9,6 +9,7 @@
     "lib": ["es2022", "dom", "dom.iterable"],
     "jsx": "preserve",
     "esModuleInterop": true,
+    "baseUrl": ".",
     "allowImportingTsExtensions": true,
     "types": ["node", "vite/client"],
     "paths": {

@@ -1,0 +1,197 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "role": "admin",
+      "fullName": "Pharmacy Administrator",
+      "email": "admin@medistock.com",
+      "phone": "9876543210",
+      "age": 35,
+      "address": "Central Pharmacy Dept, Medical Complex",
+      "passwordHash": "a1b2c3d4e5f60718:3c999faf8624c93875175851fadb2158b5456d830c15eb4bc7da46859d7158fa58e659e2810cf64cb29c33f4b361b28bd91552b2f0a5aed520f7e4d199127c09",
+      "isPhoneVerified": true,
+      "createdAt": "2026-10-27T06:59:15.543Z",
+      "updatedAt": "2026-10-27T06:59:15.543Z"
+    },
+    {
+      "id": 2,
+      "role": "customer",
+      "fullName": "Aarav Sharma",
+      "email": "aarav.sharma@example.com",
+      "phone": "9871112233",
+      "age": 29,
+      "address": "Flat 402, Green Meadows, Bengaluru",
+      "passwordHash": "ce970fc15972dbd1fd933e5853854952:cdc64d803a0c234cde18182471dc43c93b3050b3f342b253e7fef1aee617a4f32b90a21b20179a2c3307842042b5bcb27f1f3098d69f30205f196cb021bd73a3",
+      "isPhoneVerified": false,
+      "createdAt": "2026-10-27T06:59:16.210Z",
+      "updatedAt": "2026-10-27T06:59:16.210Z"
+    },
+    {
+      "id": 3,
+      "role": "customer",
+      "fullName": "Sunita Verma",
+      "email": null,
+      "phone": "9822334455",
+      "age": 52,
+      "address": "74 Gandhi Nagar, Jaipur",
+      "passwordHash": "71ae38a4bb985816f22e9565c6712e97:6f7133f80c4929962ce669fe278aaef42e145775e0864dac181398f5daee17ec3a958196e0d1ea5f3db4dc12514f745d242779c16cb28fc9749d3065b13ebf6e",
+      "isPhoneVerified": true,
+      "createdAt": "2026-10-27T06:59:16.441Z",
+      "updatedAt": "2026-10-27T06:59:16.441Z"
+    },
+    {
+      "id": 4,
+      "role": "customer",
+      "fullName": "janani",
+      "email": "brokenlife5229@gmail.com",
+      "phone": "8867345229",
+      "age": 19,
+      "address": "Suresh residency near sv mansion , Hallasahalli Rd , Varthur , Karnataka 560087",
+      "passwordHash": "ae910183ecaa01b0bafb377088ff1975:64ba2c1967e68a1f5efeffb9b00591587a3952a3f59aceae261f83d97c88f9b94660e19f90afa17811361e694f014d6eabc64ee49e886676d9e8a02cdb7cbb77",
+      "isPhoneVerified": false,
+      "createdAt": "2026-10-27T10:34:48.289Z",
+      "updatedAt": "2026-10-27T10:34:48.289Z"
+    }
+  ],
+  "phone_verifications": [
+    {
+      "id": 1,
+      "phone": "9822334455",
+      "code": "358330",
+      "expiresAt": "2026-10-27T07:09:16.223Z",
+      "verified": true,
+      "createdAt": "2026-10-27T06:59:16.223Z",
+      "updatedAt": "2026-10-27T06:59:16.235Z"
+    },
+    {
+      "id": 2,
+      "phone": "8867345229",
+      "code": "365438",
+      "expiresAt": "2026-10-27T10:53:47.770Z",
+      "verified": false,
+      "createdAt": "2026-10-27T10:43:47.770Z",
+      "updatedAt": "2026-10-27T10:43:47.770Z"
+    },
+    {
+      "id": 3,
+      "phone": "8867345229",
+      "code": "082899",
+      "expiresAt": "2026-10-27T10:54:09.421Z",
+      "verified": false,
+      "createdAt": "2026-10-27T10:44:09.421Z",
+      "updatedAt": "2026-10-27T10:44:09.421Z"
+    },
+    {
+      "id": 4,
+      "phone": "9538363099",
+      "code": "777456",
+      "expiresAt": "2026-10-27T10:54:43.557Z",
+      "verified": false,
+      "createdAt": "2026-10-27T10:44:43.557Z",
+      "updatedAt": "2026-10-27T10:44:43.557Z"
+    },
+    {
+      "id": 5,
+      "phone": "8867345229",
+      "code": "160870",
+      "expiresAt": "2026-10-27T11:24:33.773Z",
+      "verified": false,
+      "createdAt": "2026-10-27T11:14:33.773Z",
+      "updatedAt": "2026-10-27T11:14:33.773Z"
+    }
+  ],
+  "medicines": [
+    {
+      "id": 1,
+      "name": "Paracetamol 500mg",
+      "category": "Analgesics",
+      "batchNumber": "PCM-2024-01",
+      "quantity": 120,
+      "unitPrice": 2.5,
+      "expiryDate": "2027-05-15",
+      "supplier": "Apex Healthcare",
+      "createdAt": "2026-10-27T06:59:15.543Z",
+      "updatedAt": "2026-10-27T06:59:15.543Z"
+    },
+    {
+      "id": 2,
+      "name": "Amoxicillin 250mg",
+      "category": "Antibiotics",
+      "batchNumber": "AMX-8821",
+      "quantity": 45,
+      "unitPrice": 8.75,
+      "expiryDate": "2026-11-20",
+      "supplier": "Biochem Pharma",
+      "createdAt": "2026-10-27T06:59:15.543Z",
+      "updatedAt": "2026-10-27T06:59:15.543Z"
+    },
+    {
+      "id": 3,
+      "name": "Cetirizine 10mg",
+      "category": "Antihistamine",
+      "batchNumber": "CTZ-9011",
+      "quantity": 8,
+      "unitPrice": 3.2,
+      "expiryDate": "2026-12-10",
+      "supplier": "Sunlight Labs",
+      "createdAt": "2026-10-27T06:59:15.543Z",
+      "updatedAt": "2026-10-27T06:59:15.543Z"
+    },
+    {
+      "id": 4,
+      "name": "Metformin 500mg",
+      "category": "Antidiabetic",
+      "batchNumber": "MET-4410",
+      "quantity": 210,
+      "unitPrice": 4.5,
+      "expiryDate": "2027-08-30",
+      "supplier": "Global Meds",
+      "createdAt": "2026-10-27T06:59:15.543Z",
+      "updatedAt": "2026-10-27T06:59:15.543Z"
+    },
+    {
+      "id": 5,
+      "name": "Azithromycin 500mg",
+      "category": "Antibiotics",
+      "batchNumber": "AZM-3301",
+      "quantity": 5,
+      "unitPrice": 15,
+      "expiryDate": "2026-10-30",
+      "supplier": "Apex Healthcare",
+      "createdAt": "2026-10-27T06:59:15.543Z",
+      "updatedAt": "2026-10-27T06:59:15.543Z"
+    },
+    {
+      "id": 6,
+      "name": "Pantoprazole 40mg",
+      "category": "Antacids",
+      "batchNumber": "PAN-5512",
+      "quantity": 80,
+      "unitPrice": 6,
+      "expiryDate": "2026-09-15",
+      "supplier": "MedLife Care",
+      "createdAt": "2026-10-27T06:59:15.543Z",
+      "updatedAt": "2026-10-27T06:59:15.543Z"
+    }
+  ],
+  "activities": [
+    {
+      "id": 1,
+      "action": "system_init",
+      "details": "Medistock inventory system initialized",
+      "createdAt": "2026-10-27T06:59:15.544Z"
+    }
+  ],
+  "feedback": [
+    {
+      "id": 1,
+      "rating": 5,
+      "comment": "Excellent inventory availability and clean interface!",
+      "userId": "2",
+      "createdAt": "2026-10-27T06:59:17.091Z",
+      "updatedAt": "2026-10-27T06:59:17.091Z"
+    }
+  ],
+  "questions": [],
+  "app_users": []
+}

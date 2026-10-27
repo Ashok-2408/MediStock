@@ -429,7 +429,7 @@ components:
       type: object
       properties:
         name: { type: string, minLength: 1 }
-        email: { type: string, format: email }
+        email: { type: string, format: email, nullable: true }
         question: { type: string, minLength: 1 }
       required: [name, email, question]
     StockReport:

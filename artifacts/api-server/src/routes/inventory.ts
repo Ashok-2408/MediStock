@@ -10,7 +10,10 @@ import {
   lte,
   or,
   sql,
+  type SQL,
 } from "drizzle-orm";
+import type { NodePgTransaction } from "drizzle-orm/node-postgres";
+import type { ExtractTablesWithRelations } from "drizzle-orm";
 import {
   activitiesTable,
   appUsersTable,
@@ -19,6 +22,7 @@ import {
   medicinesTable,
   questionsTable,
 } from "@workspace/db";
+import * as dbSchema from "@workspace/db/schema";
 import {
   CheckoutCartBody,
   CheckoutCartResponse,
@@ -48,6 +52,10 @@ import {
 import { requireAdmin, requireUser } from "../middlewares/requireUser";
 
 const router: IRouter = Router();
+type InventoryTransaction = NodePgTransaction<
+  typeof dbSchema,
+  ExtractTablesWithRelations<typeof dbSchema>
+>;
 
 const faqs = [
   {
@@ -86,21 +94,25 @@ function toDateOnly(value: Date | string): string {
   return value instanceof Date ? value.toISOString().slice(0, 10) : value;
 }
 
+function toMonthKey(value: unknown): string | null {
+  const date =
+    value instanceof Date
+      ? value
+      : typeof value === "string" || typeof value === "number"
+        ? new Date(value)
+        : null;
+
+  return date && !Number.isNaN(date.getTime())
+    ? date.toISOString().slice(0, 7)
+    : null;
+}
+
 router.use(requireUser);
 
-router.get("/auth/me", (req, res) => {
-  const profile = res.locals.profile as typeof appUsersTable.$inferSelect;
-  res.json(
-    GetCurrentProfileResponse.parse({
-      userId: profile.clerkUserId,
-      role: profile.role,
-      isFirstAdmin: profile.isFirstAdmin,
-    }),
-  );
-});
-
-router.get("/dashboard/summary", async (_req, res): Promise<void> => {
-  const medicines = await db.select().from(medicinesTable);
+router.get("/dashboard/summary", requireAdmin, async (_req, res): Promise<void> => {
+  const medicines: (typeof medicinesTable.$inferSelect)[] = await db
+    .select()
+    .from(medicinesTable);
   const today = calendarDate();
   const expiryLimit = calendarDate(30);
   const summary = {
@@ -121,11 +133,11 @@ router.get("/dashboard/summary", async (_req, res): Promise<void> => {
   res.json(GetDashboardSummaryResponse.parse(summary));
 });
 
-router.get("/dashboard/trends", async (_req, res): Promise<void> => {
+router.get("/dashboard/trends", requireAdmin, async (_req, res): Promise<void> => {
   const start = new Date();
   start.setUTCDate(1);
   start.setUTCMonth(start.getUTCMonth() - 5);
-  const rows = await db
+  const rows: (typeof activitiesTable.$inferSelect)[] = await db
     .select()
     .from(activitiesTable)
     .where(gte(activitiesTable.createdAt, start))
@@ -138,14 +150,14 @@ router.get("/dashboard/trends", async (_req, res): Promise<void> => {
     const stockIn = rows
       .filter(
         (row) =>
-          row.createdAt.toISOString().slice(0, 7) === key &&
+          toMonthKey(row.createdAt) === key &&
           row.action === "stock_added",
       )
       .reduce((total, row) => total + (row.quantity ?? 0), 0);
     const stockOut = rows
       .filter(
         (row) =>
-          row.createdAt.toISOString().slice(0, 7) === key &&
+          toMonthKey(row.createdAt) === key &&
           row.action === "dispensed",
       )
       .reduce((total, row) => total + (row.quantity ?? 0), 0);
@@ -158,7 +170,7 @@ router.get("/dashboard/trends", async (_req, res): Promise<void> => {
   res.json(GetDashboardTrendsResponse.parse(trends));
 });
 
-router.get("/activities", async (req, res): Promise<void> => {
+router.get("/activities", requireAdmin, async (req, res): Promise<void> => {
   const params = ListActivitiesQueryParams.safeParse(req.query);
   if (!params.success) {
     res.status(400).json({ error: params.error.message });
@@ -180,7 +192,7 @@ router.get("/medicines", async (req, res): Promise<void> => {
     return;
   }
   const { search, status } = params.data;
-  const filters = [];
+  const filters: SQL[] = [];
   if (search?.trim()) {
     const term = `%${search.trim()}%`;
     filters.push(
@@ -346,8 +358,8 @@ router.post(
       );
     }
     try {
-      const checkout = await db.transaction(async (tx) => {
-        const rows = await tx
+      const checkout = await db.transaction(async (tx: InventoryTransaction) => {
+        const rows: (typeof medicinesTable.$inferSelect)[] = await tx
           .select()
           .from(medicinesTable)
           .where(inArray(medicinesTable.id, Array.from(quantities.keys())))
@@ -355,7 +367,12 @@ router.post(
         if (rows.length !== quantities.size) {
           throw new Error("MEDICINE_NOT_FOUND");
         }
-        const items = [];
+        const items: {
+          medicineId: number;
+          medicineName: string;
+          quantity: number;
+          lineTotal: number;
+        }[] = [];
         for (const medicine of rows) {
           const quantity = quantities.get(medicine.id)!;
           if (medicine.quantity < quantity) {
@@ -411,7 +428,7 @@ router.post(
   },
 );
 
-router.get("/feedback", async (_req, res): Promise<void> => {
+router.get("/feedback", requireAdmin, async (_req, res): Promise<void> => {
   const feedback = await db
     .select()
     .from(feedbackTable)
@@ -452,7 +469,7 @@ router.post("/questions", async (req, res): Promise<void> => {
   res.status(201).json(SubmitQuestionResponse.parse(question));
 });
 
-router.get("/reports/stock", async (_req, res): Promise<void> => {
+router.get("/reports/stock", requireAdmin, async (_req, res): Promise<void> => {
   const items = await db
     .select()
     .from(medicinesTable)

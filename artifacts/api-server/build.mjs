@@ -19,6 +19,11 @@ async function buildAll() {
     platform: "node",
     bundle: true,
     format: "esm",
+    alias: {
+      "@workspace/db": path.resolve(artifactDir, "../../lib/db/src/index.ts"),
+      "@workspace/api-zod": path.resolve(artifactDir, "../../lib/api-zod/src/index.ts"),
+      "@workspace/api-client-react": path.resolve(artifactDir, "../../lib/api-client-react/src/index.ts"),
+    },
     outdir: distDir,
     outExtension: { ".js": ".mjs" },
     logLevel: "info",

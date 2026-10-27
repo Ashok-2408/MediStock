@@ -278,7 +278,7 @@ export const ListFaqsResponse = zod.array(ListFaqsResponseItem)
 
 export const SubmitQuestionBody = zod.object({
   "name": zod.string().min(1),
-  "email": zod.string().email(),
+  "email": zod.string().email().nullable(),
   "question": zod.string().min(1)
 })
 

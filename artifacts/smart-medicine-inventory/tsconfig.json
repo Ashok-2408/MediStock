@@ -9,8 +9,10 @@
     "resolveJsonModule": true,
     "allowImportingTsExtensions": true,
     "moduleResolution": "bundler",
+    "baseUrl": ".",
     "types": ["node", "vite/client"],
     "paths": {
+      "@workspace/api-client-react": ["../../lib/api-client-react/src/index.ts"],
       "@/*": ["./src/*"]
     }
   },

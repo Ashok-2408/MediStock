@@ -9,7 +9,7 @@
 export interface QuestionInput {
   /** @minLength 1 */
   name: string;
-  email: string;
+  email: string | null;
   /** @minLength 1 */
   question: string;
 }
